@@ -1,3 +1,4 @@
+import Backdrop from "./Backdrop"
 import CustomButton from "./CustomButton"
 import Footer from "./Footer"
 import Hero from "./Hero"
@@ -7,6 +8,7 @@ import CustomFilter from "./CustomFilter"
 import SearchName from "./SearchName"
 
 export {
+    Backdrop,
     CustomButton,
     CustomFilter,
     Footer,
