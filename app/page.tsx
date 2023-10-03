@@ -1,82 +1,60 @@
-import { Backdrop, CustomFilter, Hero, Map, SearchBar } from '@/components'
+"use client"
+
+import { Backdrop, CustomFilter, Hero, LocationDetailsModal, Map, SearchBar } from '@/components'
 import LocationCard from '@/components/LocationCard'
-import { calculateDistance, fetchLocations } from '@/utils'
+import { ActionTypes, LocationProvider, useDispatchLocations, useLocations } from '@/context/LocationContext';
+import { calculateDistance, fetchLocations, sortByDistance } from '@/utils'
 import Image from 'next/image'
+import { createContext, useContext, useEffect, useState } from 'react';
+import { LocationData, LocationDetails } from "@/types"
 
-export default async function Home() {
-  const myLat = 0.0
-  const myLon = 0.0
+export default function Home() {
 
-  let locations = await fetchLocations() || []
-  console.log(locations)
+    const { myLocation, locations } = useLocations()
+    const dispatch = useDispatchLocations()
 
-  locations = locations.map((location) => {
-    const distance = calculateDistance(myLat, myLon, location.lat, location.long)
-    return { ...location, distance }
-  })
+    const [selectedLocationDetails, setSelectedLocationDetails] = useState<LocationDetails | null>(null);
 
-  // Sort by distance in ascending order
-  // @ts-ignore
-  locations.sort((a, b) => b.distance - a.distance)
+    const sortedLocations = sortByDistance(locations);
 
-  return (
-    // <main className="flex min-h-screen flex-col items-center justify-between p-2">
-    <main className="overflow-hidden">
-      <Backdrop />
-
-      {/* <div className="w-[500px] h-[500px] bg-radial-gradient"></div> */}
-
-      <div className="bg-radial-gradient">
-        <Map />
-      </div>
-
-
-      {/* <div className="overflow-hidden m-6 border backdrop-blur-sm border-blue-300 hover:border-amber-400 shadow rounded-2xl p-4 max-w-sm w-full mx-auto">
-        <div className="animate-pulse flex space-x-4">
-          <div className="rounded-full bg-slate-700 h-40 w-40 -ml-16 -mt-8 -mb-8"></div>
-          <div className="flex-1 space-y-8 py-1">
-            <div className="h-3 bg-slate-700 rounded-full"></div>
-            <div className="space-y-4">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="h-3 bg-slate-700 rounded-full col-span-2"></div>
-                <div className="h-3 bg-slate-700 rounded-full col-span-1"></div>
-              </div>
-              <div className="h-3 bg-slate-700 rounded-full"></div>
+    // const details = {
+    //     "id": 22,
+    //     "name": "Boba Fett",
+    //     "height": 1.83,
+    //     "mass": 78,
+    //     "gender": "male",
+    //     "homeworld": "kamino",
+    //     "wiki": "http://starwars.wikia.com/wiki/Boba_Fett",
+    //     "image": "https://vignette.wikia.nocookie.net/starwars/images/7/79/Boba_Fett_HS_Fathead.png",
+    //     "born": "Shortly after the Battle of Naboo",
+    //     "species": "human",
+    //     "hairColor": "black",
+    //     "eyeColor": "brown",
+    //     "skinColor": "tan",
+    //     "affiliations": [
+    //         "Confederacy of Independent Systems",
+    //         "Boba Fett's syndicate",
+    //         "Jabba Desilijic Tiure's criminal empire",
+    //         "Galactic Empire"
+    //     ],
+    //     "formerAffiliations": []
+    // }
+    
+    return (
+        // <main className="flex min-h-screen flex-col items-center justify-between p-2">
+        <main className="overflow-hidden">
+            <Backdrop />
+            <div className="bg-radial-gradient -mt-4">
+                <Map />
             </div>
-          </div>
-        </div>
-      </div> */}
-
-
-      {/* <Hero />
-
-      <div className="mt-12 padding-x padding-y max-width" id="discover">
-        <div className="home__text-container">
-          <h1 className="text-4xl font-extrabold">Catalogue</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-        </div>
-        <div className="home__filters">
-          <SearchBar />
-          <div className="home__filter-container">
-            <CustomFilter title="distance" />
-            <CustomFilter title="alphabetical" />
-          </div>
-        </div>
-        {
-          locations.length > 0 ? (
-            <section>
-              <div className="home__locations-wrapper">
-                {locations.map((location) => <LocationCard location={location} />)}
-              </div>
-            </section>
-          ) : (
-            <div>
-              <h2>Oops, could not fetch locations...</h2>
-              <p></p>
+            <div className="absolute bottom-0 left-0 right-0 z-10 overflow-x-auto flex items-end snap-x p-4">
+                {
+                    locations.map((location) => <LocationCard key={`location-${location.id}`} location={location} onClick={() => set} />)
+                }
             </div>
-          )
-        }
-      </div> */}
-    </main>
-  )
+            {/* {selectedLocationDetails
+                ? <LocationDetailsModal details={selectedLocationDetails} onClose={() => console.log("onClose")}/>
+                : null } */}
+        </main >
+    )
 }
