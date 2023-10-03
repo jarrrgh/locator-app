@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import React from 'react'
 
 const bd = () => {
@@ -21,6 +22,7 @@ const bd = () => {
                 <div className="bd-tile bd-bottom-left bd-animate-opacity bd-freq-9 bd-delay-2"></div>
                 <div className="bd-tile bd-bottom-right bd-animate-opacity bd-freq-5 bd-delay"></div>
             </div>
+            <Script src="/parallax.js"></Script>
         </div>
     )
 }
