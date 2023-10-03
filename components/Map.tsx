@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { GoogleMap, LoadScript, Marker, Polyline, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, Polyline } from '@react-google-maps/api';
 import { ActionTypes, useDispatchLocations, useLocations } from '@/context/LocationContext';
 import { LocationData } from '@/types';
 
@@ -11,8 +11,8 @@ const containerStyle = {
 };
 
 const center = {
-    lat: 23.609561,
-    lng: 18.039166
+    lat: -10.0,
+    lng: 18.0
 };
 
 const Map = () => {

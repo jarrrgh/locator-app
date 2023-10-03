@@ -40,6 +40,11 @@ body {
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
     }
+
+    .mask-fade {
+      -webkit-mask-image: linear-gradient(to top, black 70%, transparent 100%);
+      mask-image: linear-gradient(to top, black 70%, transparent 100%);
+    }
   }
 }
 

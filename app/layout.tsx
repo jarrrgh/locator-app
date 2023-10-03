@@ -1,4 +1,3 @@
-import { Footer, Navbar } from '@/components'
 import './globals.css'
 import type { Metadata } from 'next'
 import { LocationProvider } from '@/context/LocationContext'
@@ -16,11 +15,9 @@ export default function RootLayout({
     return (
         <html lang="en" className="dark">
             <body>
-                {/* <Navbar /> */}
                 <LocationProvider>
                     {children}
                 </LocationProvider>
-                {/* <Footer /> */}
             </body>
         </html>
     )

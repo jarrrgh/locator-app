@@ -1,13 +1,12 @@
 'use client'
 
-import { LocationData, LocationDetails } from '@/types';
+import { LocationData } from '@/types';
 import { calculateDistance } from '@/utils';
 import React, { createContext, useReducer, Dispatch, useContext } from 'react';
 
 export enum ActionTypes {
     REFRESH_DISTANCES = 'REFRESH_DISTANCES',
     SET_MY_LOCATION = 'SET_MY_LOCATION',
-    SET_SELECTED_LOCATION_DETAILS = 'SET_SELECTED_LOCATION_DETAILS',
     SET_LOCATIONS = 'SET_LOCATIONS',
 }
 
@@ -40,19 +39,8 @@ const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case ActionTypes.SET_MY_LOCATION:
             return { ...state, myLocation: action.payload }
-        case ActionTypes.SET_SELECTED_LOCATION_DETAILS:
-            return { ...state, selectedLocation: action.payload }
         case ActionTypes.SET_LOCATIONS:
             return { ...state, locations: action.payload }
-        // case ActionTypes.SET_LOCATION_DETAILS:
-        //     const id = action.payload.id
-        //     const details = action.payload.id
-        //     const locations = state.locations.map((location) => {
-        //         return location.id === id
-        //             ? { ...location, details }
-        //             : { ...location }
-        //     })
-        //     return { ...state, locations };
         case ActionTypes.REFRESH_DISTANCES:
             const myLocation = state.myLocation
             if (myLocation) {

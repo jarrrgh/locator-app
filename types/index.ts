@@ -1,21 +1,3 @@
-import { MouseEventHandler } from "react"
-
-export interface CustomButtonProps {
-    title: string
-    containerStyles?: string
-    handleClick?: MouseEventHandler<HTMLButtonElement>
-    btnType?: "button" | "submit"
-}
-
-export interface CustomFilterProps {
-    title: string
-}
-
-export interface SearchNameProps {
-    name: string
-    setName: (name: string) => void
-}
-
 export interface LocationData {
     id: number
     lat: number
