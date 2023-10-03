@@ -1,4 +1,4 @@
-import { Backdrop, CustomFilter, Hero, SearchBar } from '@/components'
+import { Backdrop, CustomFilter, Hero, Map, SearchBar } from '@/components'
 import LocationCard from '@/components/LocationCard'
 import { calculateDistance, fetchLocations } from '@/utils'
 import Image from 'next/image'
@@ -24,7 +24,14 @@ export default async function Home() {
     <main className="overflow-hidden">
       <Backdrop />
 
-      <div className="overflow-hidden m-6 border backdrop-blur-sm border-blue-300 hover:border-amber-400 shadow rounded-2xl p-4 max-w-sm w-full mx-auto">
+      {/* <div className="w-[500px] h-[500px] bg-radial-gradient"></div> */}
+
+      <div className="bg-radial-gradient">
+        <Map />
+      </div>
+
+
+      {/* <div className="overflow-hidden m-6 border backdrop-blur-sm border-blue-300 hover:border-amber-400 shadow rounded-2xl p-4 max-w-sm w-full mx-auto">
         <div className="animate-pulse flex space-x-4">
           <div className="rounded-full bg-slate-700 h-40 w-40 -ml-16 -mt-8 -mb-8"></div>
           <div className="flex-1 space-y-8 py-1">
@@ -38,7 +45,8 @@ export default async function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+
 
       {/* <Hero />
 

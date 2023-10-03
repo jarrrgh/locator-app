@@ -3,6 +3,7 @@ import CustomButton from "./CustomButton"
 import Footer from "./Footer"
 import Hero from "./Hero"
 import Navbar from "./Navbar"
+import Map from "./Map"
 import SearchBar from "./SearchBar"
 import CustomFilter from "./CustomFilter"
 import SearchName from "./SearchName"
@@ -14,6 +15,7 @@ export {
     Footer,
     Hero,
     Navbar,
+    Map,
     SearchBar,
     SearchName
 }
