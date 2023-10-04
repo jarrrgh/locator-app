@@ -29,9 +29,12 @@ export default function Home() {
             <div className="bg-radial-gradient -mt-4">
                 <Map />
             </div>
-            <div ref={containerRef} className="absolute bottom-0 left-0 right-0 z-10 overflow-x-auto flex items-end snap-x p-4">
-                {locations.map((location) => <LocationCard key={`location-${location.id}`} location={location} />)}
-            </div>
+
+            {myLocation
+                ? <div ref={containerRef} className="absolute bottom-0 left-0 right-0 z-10 overflow-x-auto flex items-end snap-x p-4">
+                    {locations.map((location) => <LocationCard key={`location-${location.id}`} location={location} />)}
+                </div>
+                : null}
         </main >
     )
 }
