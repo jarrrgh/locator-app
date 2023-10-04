@@ -35,7 +35,6 @@ const LocationStateContext = createContext<State>(initialState);
 const LocationDispatchContext = createContext<Dispatch<Action>>(() => null)
 
 const reducer = (state: State, action: Action): State => {
-    console.log(action)
     switch (action.type) {
         case ActionTypes.SET_MY_LOCATION:
             return { ...state, myLocation: action.payload }
@@ -50,7 +49,6 @@ const reducer = (state: State, action: Action): State => {
                         myLocation.long,
                         location.lat,
                         location.long)
-                    console.log(`${distance} km`)
                     return { ...location, distance }
                 })
                 return { ...state, locations };

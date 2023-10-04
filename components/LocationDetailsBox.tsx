@@ -8,7 +8,6 @@ interface LocationDetailsProps {
 const LocationDetailsBox = ({ details }: LocationDetailsProps) => {
 
     const parseStr = (label: string, value: number | number[] | string | string[] | undefined) => {
-        console.log(label, value)
         if (value) {
             if (Array.isArray(value)) {
                 if (value.length > 0) {

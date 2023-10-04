@@ -17,7 +17,6 @@ export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2
 }
 
 export const sortByDistance = (locations: LocationData[]) => {
-    console.log(locations)
     if (Array.isArray(locations)) {
         // Sort by distance in ascending order
         locations.sort((a, b) => {

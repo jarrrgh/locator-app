@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { GoogleMap, LoadScript, Marker, Polyline } from '@react-google-maps/api';
 import { ActionTypes, useDispatchLocations, useLocations } from '@/context/LocationContext';
 import { LocationData } from '@/types';
@@ -19,7 +19,11 @@ const Map = () => {
     const { myLocation, locations } = useLocations()
     const dispatch = useDispatchLocations()
 
+    const [map, setMap] = useState<google.maps.Map | null>(null);
+    const [polylines, setPolylines] = useState<google.maps.Polyline[]>([]);
+
     const onLoad = React.useCallback((map: google.maps.Map) => {
+        setMap(map)
         fetch("https://aseevia.github.io/star-wars-frontend/data/secret.json")
             .then(res => res.json())
             .then(secret => atob(secret.message))
@@ -31,21 +35,53 @@ const Map = () => {
             .catch(console.error)
     }, [dispatch])
 
+    map?.unbindAll
+
     const onClick = React.useCallback((e: google.maps.MapMouseEvent) => {
+        // <Polyline
+        //     key={`polyline-${location.id}`}
+        //     path={[
+        //         new google.maps.LatLng(myLocation.lat, myLocation.long),
+        //         new google.maps.LatLng(location.lat, location.long)
+        //     ]}
+        //     options={{
+        //         strokeColor: "#ffffff",
+        //         strokeOpacity: 0.05,
+        //         strokeWeight: 1,
+        //         clickable: false,
+        //     }}
+        // />
+
         const latLng = e.latLng;
 
         if (latLng) {
-            const location: LocationData = { id: -1, lat: latLng.lat(), long: latLng.lng() }
+            const newLocation: LocationData = { id: -1, lat: latLng.lat(), long: latLng.lng() }
+
+            if (polylines) {
+                polylines.forEach((line) => line.setMap(null))
+            }
+            const lines = locations.map((location) => new google.maps.Polyline({
+                path: [
+                    new google.maps.LatLng(newLocation.lat, newLocation.long),
+                    new google.maps.LatLng(location.lat, location.long),
+                ],
+                strokeColor: "#fff",
+                strokeOpacity: 0.1,
+                strokeWeight: 1,
+            }))
+            lines.forEach((line) => line.setMap(map))
+            setPolylines(lines)
+
             dispatch({
                 type: ActionTypes.SET_MY_LOCATION,
-                payload: location
+                payload: newLocation
             })
             dispatch({
                 type: ActionTypes.REFRESH_DISTANCES,
                 payload: null
             })
         }
-    }, [dispatch])
+    }, [dispatch, map, locations, polylines])
 
     return (
         <div className="overflow-hidden mix-blend-screen">
@@ -73,22 +109,6 @@ const Map = () => {
                     onLoad={onLoad}
                     onClick={onClick}
                 >
-                    {myLocation && locations.length > 0
-                        ? locations.map((location) =>
-                            <Polyline
-                                key={`polyline-${location.id}`}
-                                path={[
-                                    new google.maps.LatLng(myLocation.lat, myLocation.long),
-                                    new google.maps.LatLng(location.lat, location.long)
-                                ]}
-                                options={{
-                                    strokeColor: "#ffffff",
-                                    strokeOpacity: 0.05,
-                                    strokeWeight: 1,
-                                    clickable: false,
-                                }}
-                            />
-                        ) : null}
                     {myLocation
                         ? <Marker
                             icon={{
