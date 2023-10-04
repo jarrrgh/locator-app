@@ -66,8 +66,9 @@ const Map = () => {
                     new google.maps.LatLng(location.lat, location.long),
                 ],
                 strokeColor: "#fff",
-                strokeOpacity: 0.1,
+                strokeOpacity: 0.05,
                 strokeWeight: 1,
+                clickable: false,
             }))
             lines.forEach((line) => line.setMap(map))
             setPolylines(lines)
@@ -111,6 +112,7 @@ const Map = () => {
                 >
                     {myLocation
                         ? <Marker
+                            clickable={false}
                             icon={{
                                 url: "/my-location.svg",
                                 scaledSize: new google.maps.Size(0.25 * 92.53, 0.25 * 122.88)
@@ -121,6 +123,7 @@ const Map = () => {
                         ? locations.map((location) =>
                             <Marker
                                 key={`marker-${location.id}`}
+                                clickable={false}
                                 icon={{
                                     url: "/target.svg",
                                     scaledSize: new google.maps.Size(0.3 * 92.53, 0.3 * 122.88),

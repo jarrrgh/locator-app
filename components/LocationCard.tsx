@@ -36,7 +36,7 @@ const LocationCard = ({ location }: LocationCardProps) => {
     if (details) {
         return (
             <div
-                className="relative group overflow-hidden w-64 h-52 transition ease-in-out hover:h-96 scale-75 hover:scale-100 snap-center flex-shrink-0 bg-slate-700 border-blue-300 hover:border-slate-200 shadow rounded-xl p-3"
+                className="relative group overflow-hidden w-64 h-52 transition ease-in-out hover:h-96 scale-75 hover:scale-100 snap-center flex-shrink-0 bg-slate-700 border-blue-300 hover:border-slate-200 shadow rounded-xl p-3 -mr-6 last:mr-0"
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}>
                 <Image className="object-cover brightness-50 transition-opacity ease-in" src={details.image} alt={details.name} priority={false} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
