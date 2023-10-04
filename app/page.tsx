@@ -44,7 +44,7 @@ export default function Home() {
                 ? <div
                     ref={containerRef}
                     onClick={onClick}
-                    className="absolute bottom-0 left-0 right-0 overflow-x-auto flex items-end snap-x p-4"
+                    className={`absolute bottom-0 left-0 right-0 ${selectedLocation ? "top-0" : ""} overflow-x-auto flex items-end snap-x p-4`}
                 >
                     {locations.map((location) =>
                         <LocationCard
