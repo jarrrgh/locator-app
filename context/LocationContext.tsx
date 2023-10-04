@@ -6,6 +6,7 @@ import React, { createContext, useReducer, Dispatch, useContext } from 'react';
 
 export enum ActionTypes {
     REFRESH_DISTANCES = 'REFRESH_DISTANCES',
+    SELECT_LOCATION = 'SELECT_LOCATION',
     SET_MY_LOCATION = 'SET_MY_LOCATION',
     SET_LOCATIONS = 'SET_LOCATIONS',
 }
@@ -40,6 +41,8 @@ const reducer = (state: State, action: Action): State => {
             return { ...state, myLocation: action.payload }
         case ActionTypes.SET_LOCATIONS:
             return { ...state, locations: action.payload }
+        case ActionTypes.SELECT_LOCATION:
+            return { ...state, selectedLocation: action.payload }
         case ActionTypes.REFRESH_DISTANCES:
             const myLocation = state.myLocation
             if (myLocation) {

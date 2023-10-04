@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { LocationData, LocationDetails } from "@/types"
 import LocationDetailsBox from "./LocationDetailsBox"
 import { FiExternalLink } from 'react-icons/fi'
 import { formatDistance } from "@/utils"
+import { ActionTypes, useDispatchLocations, useLocations } from "@/context/LocationContext"
 
 interface LocationCardProps {
     location: LocationData
@@ -17,7 +18,9 @@ const LocationCard = ({ location }: LocationCardProps) => {
 
     const [details, setDetails] = useState<LocationDetails | null>(null);
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [isOpen, setOpen] = useState<boolean>(false);
+
+    const { selectedLocation } = useLocations()
+    const dispatch = useDispatchLocations()
 
     useEffect(() => {
         if (!details && !isLoading) {
@@ -31,17 +34,25 @@ const LocationCard = ({ location }: LocationCardProps) => {
         }
     }, [id, details, isLoading])
 
-    const onMouseEnter = () => setOpen(true);
-    const onMouseLeave = () => setOpen(false);
+    const isOpen = selectedLocation && location.id == selectedLocation.id
+
+    const onClick = () => {
+        if (!selectedLocation) {
+            dispatch({
+                type: ActionTypes.SELECT_LOCATION,
+                payload: location
+            })
+        }
+    }
 
     if (details) {
         return (
             <div
-                className="relative group overflow-hidden w-64 h-52 transition ease-in-out hover:h-96 scale-75 hover:scale-100 snap-center flex-shrink-0 bg-slate-700 border-blue-300 hover:border-slate-200 shadow rounded-xl p-3 -mr-6 last:mr-0"
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}>
-                <Image className="object-cover brightness-50 transition-opacity ease-in" src={details.image} alt={details.name} priority={false} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
-                <div className="absolute h-52 mask-fade left-0 bottom-0 right-0">
+                className={`relative group overflow-hidden w-64 ${isOpen ? "h-96" : "h-52"} transition ease-in-out ${isOpen ? "scale-100" : "scale-75"} snap-center flex-shrink-0 bg-slate-700 border-blue-300 hover:border-slate-200 shadow rounded-xl p-3 -mr-6 last:mr-0`}
+                onClick={onClick}
+            >
+                <Image className="object-cover brightness-50 transition-opacity ease-in rounded-xl" src={details.image} alt={details.name} priority={false} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                <div className={`absolute h-52 mask-fade left-0 bottom-0 right-0`}>
                     <div className="absolute left-4 bottom-4 right-4 align-text-bottom text-xs capitalize">
                         {isOpen ? <LocationDetailsBox details={details} /> : null}
                     </div>
@@ -49,7 +60,7 @@ const LocationCard = ({ location }: LocationCardProps) => {
                 <div className="relative">
                     {details.wiki && isOpen ? <div className="absolute left-2 top-1"><Link href={details.wiki} target="_blank"><FiExternalLink /></Link></div> : null}
                     <p className="text-right text-2xl font-bold">{formatDistance(distance)}</p>
-                    <p className="text-right text-xs mb-20 group-hover:mb-6">Distance</p>
+                    <p className={`text-right text-xs ${isOpen ? "mb-6" : "mb-20"}`}>Distance</p>
                     <h3 className="w-full font-bold text-center uppercase">{details.name}</h3>
                     <p className="w-full text-center capitalize">({details.species})</p>
                 </div>

@@ -38,20 +38,6 @@ const Map = () => {
     map?.unbindAll
 
     const onClick = React.useCallback((e: google.maps.MapMouseEvent) => {
-        // <Polyline
-        //     key={`polyline-${location.id}`}
-        //     path={[
-        //         new google.maps.LatLng(myLocation.lat, myLocation.long),
-        //         new google.maps.LatLng(location.lat, location.long)
-        //     ]}
-        //     options={{
-        //         strokeColor: "#ffffff",
-        //         strokeOpacity: 0.05,
-        //         strokeWeight: 1,
-        //         clickable: false,
-        //     }}
-        // />
-
         const latLng = e.latLng;
 
         if (latLng) {
