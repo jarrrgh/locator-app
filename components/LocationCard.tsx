@@ -6,6 +6,7 @@ import Link from "next/link"
 import { LocationData, LocationDetails } from "@/types"
 import LocationDetailsBox from "./LocationDetailsBox"
 import { FiExternalLink } from 'react-icons/fi'
+import { formatDistance } from "@/utils"
 
 interface LocationCardProps {
     location: LocationData
@@ -47,7 +48,8 @@ const LocationCard = ({ location }: LocationCardProps) => {
                 </div>
                 <div className="relative">
                     {details.wiki && isOpen ? <div className="absolute left-2 top-1"><Link href={details.wiki} target="_blank"><FiExternalLink /></Link></div> : null}
-                    <p className="text-right text-2xl font-bold mb-20 group-hover:mb-6">{distance ? distance : '--'} km</p>
+                    <p className="text-right text-2xl font-bold">{formatDistance(distance)}</p>
+                    <p className="text-right text-xs mb-20 group-hover:mb-6">Distance</p>
                     <h3 className="w-full font-bold text-center uppercase">{details.name}</h3>
                     <p className="w-full text-center capitalize">({details.species})</p>
                 </div>

@@ -16,6 +16,20 @@ export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2
     return Math.round(distance * 10) / 10; // km
 }
 
+export const formatDistance = (distance: number | undefined): string => {
+    let distanceStr = "--"
+    if (typeof distance === 'number') {
+        if (distance > 1000) {
+            distanceStr = `${Math.round(distance / 1000 * 100) / 100} tkm`
+        } else if (distance > 1) {
+            distanceStr = `${Math.round(distance * 10) / 10} km`
+        } else {
+            distanceStr = `${Math.round(distance * 100)} m`
+        }
+    }
+    return distanceStr
+}
+
 export const sortByDistance = (locations: LocationData[]) => {
     if (Array.isArray(locations)) {
         // Sort by distance in ascending order
